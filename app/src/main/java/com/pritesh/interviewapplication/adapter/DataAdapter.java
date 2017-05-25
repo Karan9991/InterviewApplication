@@ -11,7 +11,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.pritesh.interviewapplication.R;
@@ -31,12 +30,15 @@ public class DataAdapter extends BaseAdapter
 {
     ArrayList<DataModel>mDataModelArrayList;
     Activity mContext;
+    com.pritesh.interviewapplication.lazyloading.ImageLoader imageLoader;
     public DataAdapter(Activity context, ArrayList<DataModel> dataModelArrayList)
     {
         mContext = context;
         mDataModelArrayList = dataModelArrayList;
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
         ImageLoader.getInstance().init(config);
+        imageLoader = new com.pritesh.interviewapplication.lazyloading.ImageLoader(context);
+
 
     }
     @Override
@@ -77,9 +79,12 @@ public class DataAdapter extends BaseAdapter
         viewHolder.mTextView.setText(dm.getText());
         //Picasso.with(mContext).load(dm.getUrl()).into(viewHolder.mImageView);
         //ImageLoader.getInstance().displayImage(dm.getUrl(),viewHolder.mImageView);
-        Glide.with(mContext).load(dm.getUrl())
-                .thumbnail(1)
-                .into(viewHolder.mImageView);
+        //Glide.with(mContext).load(dm.getUrl())
+        //        .thumbnail(1)
+        //        .into(viewHolder.mImageView);
+
+        //LazyLoading Custom Library in the Project
+        imageLoader.DisplayImageRotated(dm.getUrl(),viewHolder.mImageView);
 
         //This will crash the app due to OOM error
         //Can be implemented in Service Class
