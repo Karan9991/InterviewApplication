@@ -2,7 +2,7 @@ package com.pritesh.interviewapplication;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.pritesh.interviewapplication.adapter.DataRecyclerViewAdapter;
@@ -30,10 +30,12 @@ public class RecyclerViewDataActivity extends AppCompatActivity
 
         mRecyclerView = (RecyclerView)findViewById(R.id.rvDataList);
         mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
+        //LinearLayoutManager llm = new LinearLayoutManager(this);
         //llm.setOrientation(LinearLayoutManager.HORIZONTAL);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(llm);
+        //llm.setOrientation(LinearLayoutManager.VERTICAL);
+        //mRecyclerView.setLayoutManager(llm);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(RecyclerViewDataActivity.this, 2);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
 
         getRetrofitSupport();
     }
