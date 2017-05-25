@@ -13,6 +13,7 @@ public class DataModel
     public String text;
     @SerializedName("url")
     public String url;
+
     public String getText()
     {
         return text;

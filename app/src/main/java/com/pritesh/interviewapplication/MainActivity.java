@@ -10,7 +10,10 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.pritesh.interviewapplication.adapter.DataAdapter;
+import com.pritesh.interviewapplication.data.AllData;
 import com.pritesh.interviewapplication.data.DataModel;
+import com.pritesh.interviewapplication.network.ApiClient;
+import com.pritesh.interviewapplication.network.ApiInterface;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +27,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -41,8 +48,37 @@ public class MainActivity extends AppCompatActivity
 
         lstData = (ListView)findViewById(R.id.lstData);
         mArrayDataList = new ArrayList<>();
-        new DownloadData().execute(BASE_URL);
 
+        //Traditional Async Call
+        //new DownloadData().execute(BASE_URL);
+
+        //Retrofit Call
+        getRetrofitSupport();
+
+    }
+
+    private void getRetrofitSupport()
+    {
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<AllData> apiServiceData = apiService.getData();
+        apiServiceData.enqueue(new Callback<AllData>()
+        {
+            @Override
+            public void onResponse(Call<AllData> call, Response<AllData> response)
+            {
+                mArrayDataList = response.body().images;
+                mDataAdapter = new DataAdapter(MainActivity.this,mArrayDataList);
+                lstData.setAdapter(mDataAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<AllData> call, Throwable t)
+            {
+
+            }
+        });
     }
 
     // DownloadImage AsyncTask
