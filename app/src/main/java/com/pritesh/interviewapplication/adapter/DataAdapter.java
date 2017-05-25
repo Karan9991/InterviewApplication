@@ -78,7 +78,9 @@ public class DataAdapter extends BaseAdapter
         DataModel dm = mDataModelArrayList.get(position);
         viewHolder.mTextView.setText(dm.getText());
         //Picasso.with(mContext).load(dm.getUrl()).into(viewHolder.mImageView);
+
         //ImageLoader.getInstance().displayImage(dm.getUrl(),viewHolder.mImageView);
+
         //Glide.with(mContext).load(dm.getUrl())
         //        .thumbnail(1)
         //        .into(viewHolder.mImageView);
