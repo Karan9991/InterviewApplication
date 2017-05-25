@@ -34,7 +34,7 @@ public class RecyclerViewDataActivity extends AppCompatActivity
         //llm.setOrientation(LinearLayoutManager.HORIZONTAL);
         //llm.setOrientation(LinearLayoutManager.VERTICAL);
         //mRecyclerView.setLayoutManager(llm);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(RecyclerViewDataActivity.this, 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(RecyclerViewDataActivity.this, 3);
         mRecyclerView.setLayoutManager(gridLayoutManager);
 
         getRetrofitSupport();
@@ -52,7 +52,7 @@ public class RecyclerViewDataActivity extends AppCompatActivity
             public void onResponse(Call<AllData> call, Response<AllData> response)
             {
                 ArrayList<DataModel>mArrayDataList = response.body().images;
-                mDataRecyclerViewAdapter = new DataRecyclerViewAdapter(RecyclerViewDataActivity.this,mArrayDataList);
+                mDataRecyclerViewAdapter = new DataRecyclerViewAdapter(RecyclerViewDataActivity.this,mArrayDataList, DataRecyclerViewAdapter.LAYOUT.GRID_LAYOUT);
                 mRecyclerView.setAdapter(mDataRecyclerViewAdapter);
             }
 

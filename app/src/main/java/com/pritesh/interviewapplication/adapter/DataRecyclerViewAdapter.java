@@ -23,11 +23,18 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<DataRecyclerVi
 {
     private List<DataModel> mDataModelList;
     private Activity mActivity;
+    LAYOUT mLAYOUT;
 
-    public DataRecyclerViewAdapter(Activity activity, List<DataModel> dataModelList)
+    public enum LAYOUT{
+        LINEAR_LAYOUT,
+        GRID_LAYOUT
+    };
+
+    public DataRecyclerViewAdapter(Activity activity, List<DataModel> dataModelList, LAYOUT layout)
     {
         mActivity = activity;
         this.mDataModelList = dataModelList;
+        mLAYOUT = layout;
     }
 
     @Override
@@ -40,7 +47,13 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<DataRecyclerVi
     public void onBindViewHolder(DataViewHolder dataViewHolder, int i)
     {
         DataModel dm = mDataModelList.get(i);
-        dataViewHolder.mTextView.setText(dm.getText());
+        dataViewHolder.mTextView.setVisibility(View.GONE);
+        if(mLAYOUT == LAYOUT.LINEAR_LAYOUT)
+        {
+            dataViewHolder.mTextView.setVisibility(View.VISIBLE);
+            dataViewHolder.mTextView.setText(dm.getText());
+        }
+
         Glide.with(mActivity).load(dm.getUrl())
                 .thumbnail(1)
                 .into(dataViewHolder.mImageView);
