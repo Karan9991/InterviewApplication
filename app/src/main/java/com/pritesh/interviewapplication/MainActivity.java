@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.pritesh.interviewapplication.adapter.DataAdapter;
 import com.pritesh.interviewapplication.data.DataModel;
 
@@ -101,9 +103,15 @@ public class MainActivity extends AppCompatActivity
 
                 for (int i = 0; i < posts.length(); i++) {
                     JSONObject post = posts.optJSONObject(i);
-                    DataModel dm = new DataModel();
-                    dm.setText(post.getString("text"));
-                    dm.setUrl(post.getString("url"));
+
+                    //Traditional Method to grab JSON data
+                    //DataModel dm = new DataModel();
+                    //dm.setText(post.getString("text"));
+                    //dm.setUrl(post.getString("url"));
+
+                    //Use Gson library to convert json string to POJO
+                    Gson gson = new GsonBuilder().create();
+                    DataModel dm = gson.fromJson(post.toString(), DataModel.class);
 
                     mArrayDataList.add(dm);
                 }

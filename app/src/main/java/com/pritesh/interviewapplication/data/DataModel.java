@@ -1,5 +1,7 @@
 package com.pritesh.interviewapplication.data;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by pritesh.patel on 2017-05-23, 2:02 PM.
  * ADESA, Canada
@@ -7,8 +9,10 @@ package com.pritesh.interviewapplication.data;
 
 public class DataModel
 {
-    private String text;
-    private String url;
+    @SerializedName("text")
+    public String text;
+    @SerializedName("url")
+    public String url;
     public String getText()
     {
         return text;
