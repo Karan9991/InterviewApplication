@@ -51,8 +51,9 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<DataRecyclerVi
         dataViewHolder.mTextView.setVisibility(View.GONE);
         if(mLAYOUT == LAYOUT.LINEAR_LAYOUT || mLAYOUT == LAYOUT.STAGGERED_GRID_LAYOUT)
         {
+            dataViewHolder.mTextView.setSelected(true);
             dataViewHolder.mTextView.setVisibility(View.VISIBLE);
-            dataViewHolder.mTextView.setText(dm.getText());
+            dataViewHolder.mTextView.setText(dm.getText() + " Hello World!!!");
         }
 
         Glide.with(mActivity).load(dm.getUrl())

@@ -36,7 +36,7 @@ public class RecyclerViewDataActivity extends AppCompatActivity
         //mRecyclerView.setLayoutManager(llm);
         //GridLayoutManager gridLayoutManager = new GridLayoutManager(RecyclerViewDataActivity.this, 3);
         //mRecyclerView.setLayoutManager(gridLayoutManager);
-        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         getRetrofitSupport();
     }
 
