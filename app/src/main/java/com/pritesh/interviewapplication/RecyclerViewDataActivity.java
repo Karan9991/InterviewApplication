@@ -2,8 +2,8 @@ package com.pritesh.interviewapplication;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import com.pritesh.interviewapplication.adapter.DataRecyclerViewAdapter;
 import com.pritesh.interviewapplication.data.AllData;
@@ -34,9 +34,9 @@ public class RecyclerViewDataActivity extends AppCompatActivity
         //llm.setOrientation(LinearLayoutManager.HORIZONTAL);
         //llm.setOrientation(LinearLayoutManager.VERTICAL);
         //mRecyclerView.setLayoutManager(llm);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(RecyclerViewDataActivity.this, 3);
-        mRecyclerView.setLayoutManager(gridLayoutManager);
-
+        //GridLayoutManager gridLayoutManager = new GridLayoutManager(RecyclerViewDataActivity.this, 3);
+        //mRecyclerView.setLayoutManager(gridLayoutManager);
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
         getRetrofitSupport();
     }
 
@@ -52,7 +52,7 @@ public class RecyclerViewDataActivity extends AppCompatActivity
             public void onResponse(Call<AllData> call, Response<AllData> response)
             {
                 ArrayList<DataModel>mArrayDataList = response.body().images;
-                mDataRecyclerViewAdapter = new DataRecyclerViewAdapter(RecyclerViewDataActivity.this,mArrayDataList, DataRecyclerViewAdapter.LAYOUT.GRID_LAYOUT);
+                mDataRecyclerViewAdapter = new DataRecyclerViewAdapter(RecyclerViewDataActivity.this,mArrayDataList, DataRecyclerViewAdapter.LAYOUT.STAGGERED_GRID_LAYOUT);
                 mRecyclerView.setAdapter(mDataRecyclerViewAdapter);
             }
 

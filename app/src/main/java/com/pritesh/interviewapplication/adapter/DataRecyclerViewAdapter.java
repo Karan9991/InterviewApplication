@@ -27,7 +27,8 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<DataRecyclerVi
 
     public enum LAYOUT{
         LINEAR_LAYOUT,
-        GRID_LAYOUT
+        GRID_LAYOUT,
+        STAGGERED_GRID_LAYOUT
     };
 
     public DataRecyclerViewAdapter(Activity activity, List<DataModel> dataModelList, LAYOUT layout)
@@ -48,7 +49,7 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<DataRecyclerVi
     {
         DataModel dm = mDataModelList.get(i);
         dataViewHolder.mTextView.setVisibility(View.GONE);
-        if(mLAYOUT == LAYOUT.LINEAR_LAYOUT)
+        if(mLAYOUT == LAYOUT.LINEAR_LAYOUT || mLAYOUT == LAYOUT.STAGGERED_GRID_LAYOUT)
         {
             dataViewHolder.mTextView.setVisibility(View.VISIBLE);
             dataViewHolder.mTextView.setText(dm.getText());
