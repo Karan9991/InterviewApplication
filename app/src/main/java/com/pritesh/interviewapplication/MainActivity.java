@@ -12,6 +12,7 @@ import com.google.gson.GsonBuilder;
 import com.pritesh.interviewapplication.adapter.DataAdapter;
 import com.pritesh.interviewapplication.data.AllData;
 import com.pritesh.interviewapplication.data.DataModel;
+import com.pritesh.interviewapplication.data.DataModel5000;
 import com.pritesh.interviewapplication.network.ApiClient;
 import com.pritesh.interviewapplication.network.ApiInterface;
 
@@ -27,6 +28,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity
     ProgressDialog mProgressDialog;
     ArrayList<DataModel> mArrayDataList;
     String BASE_URL = "https://s3.amazonaws.com/mobile-tor/test/images.json";
+    String BASE_URL_5000 = "https://jsonplaceholder.typicode.com/photos";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -53,7 +56,8 @@ public class MainActivity extends AppCompatActivity
         //new DownloadData().execute(BASE_URL);
 
         //Retrofit Call
-        getRetrofitSupport();
+        //getRetrofitSupport();
+        getRetrofitSupport5000();
 
     }
 
@@ -77,6 +81,39 @@ public class MainActivity extends AppCompatActivity
             public void onFailure(Call<AllData> call, Throwable t)
             {
 
+            }
+        });
+    }
+
+    private void getRetrofitSupport5000()
+    {
+        ApiInterface apiService =
+                ApiClient.getClient5000().create(ApiInterface.class);
+
+        Call<List<DataModel5000>> apiServiceData = apiService.getData5000();
+        apiServiceData.enqueue(new Callback<List<DataModel5000>>()
+        {
+            @Override
+            public void onResponse(Call<List<DataModel5000>> call, Response<List<DataModel5000>> response)
+            {
+                List<DataModel5000>dataModel5000 = response.body();
+                mArrayDataList = new ArrayList<DataModel>();
+                DataModel dtm = new DataModel();
+                for (DataModel5000 dm: dataModel5000)
+                {
+                    dtm.setUrl(dm.getUrl());
+                    dtm.setText(dm.getTitle());
+                    mArrayDataList.add(dtm);
+                }
+                mDataAdapter = new DataAdapter(MainActivity.this,mArrayDataList);
+                lstData.setAdapter(mDataAdapter);
+                //Log.d(TAG, "onResponse: " + response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<List<DataModel5000>> call, Throwable t)
+            {
+                Log.d(TAG, "onFailure: ");
             }
         });
     }
