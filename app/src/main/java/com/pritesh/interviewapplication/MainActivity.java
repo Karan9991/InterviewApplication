@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity
 
     private void getRetrofitSupport5000()
     {
+        final ProgressDialog pd = ProgressDialog.show(this,"Fetch Data","Loading..");
         ApiInterface apiService =
                 ApiClient.getClient5000().create(ApiInterface.class);
 
@@ -107,6 +108,7 @@ public class MainActivity extends AppCompatActivity
                 }
                 mDataAdapter = new DataAdapter(MainActivity.this,mArrayDataList);
                 lstData.setAdapter(mDataAdapter);
+                pd.hide();
                 //Log.d(TAG, "onResponse: " + response.body().toString());
             }
 
