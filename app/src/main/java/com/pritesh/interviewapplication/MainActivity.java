@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity
             public void onResponse(Call<List<DataModel5000>> call, Response<List<DataModel5000>> response)
             {
                 List<DataModel5000>dataModel5000 = response.body();
-                mArrayDataList = new ArrayList<DataModel>();
+                mArrayDataList = new ArrayList<>();
                 DataModel dtm = new DataModel();
                 for (DataModel5000 dm: dataModel5000)
                 {
@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity
             public void onFailure(Call<List<DataModel5000>> call, Throwable t)
             {
                 Log.d(TAG, "onFailure: ");
+                pd.hide();
             }
         });
     }
