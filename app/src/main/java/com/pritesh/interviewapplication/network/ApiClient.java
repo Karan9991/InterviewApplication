@@ -11,8 +11,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    static final String BASE_URL = "https://s3.amazonaws.com/mobile-tor/";
-    static final String BASE_URL_5000 = "https://jsonplaceholder.typicode.com";
+    private static final String BASE_URL = "https://s3.amazonaws.com/mobile-tor/";
+    private static final String BASE_URL_5000 = "https://jsonplaceholder.typicode.com";
+    private static final String BASE_URL_FOOD2FORK = "http://food2fork.com/api/";
     private static Retrofit retrofit = null;
 
 
@@ -30,6 +31,16 @@ public class ApiClient {
         if (retrofit==null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL_5000)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;
+    }
+
+    public static Retrofit getClientFoodFork() {
+        if (retrofit==null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL_FOOD2FORK)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
