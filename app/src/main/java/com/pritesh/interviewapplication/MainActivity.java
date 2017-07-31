@@ -15,6 +15,8 @@ import com.pritesh.interviewapplication.data.DataModel;
 import com.pritesh.interviewapplication.data.DataModel5000;
 import com.pritesh.interviewapplication.network.ApiClient;
 import com.pritesh.interviewapplication.network.ApiInterface;
+import com.pritesh.interviewapplication.network.callback.AsyncNetworkCall;
+import com.pritesh.interviewapplication.network.callback.NetworkResponse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,7 +59,21 @@ public class MainActivity extends AppCompatActivity
 
         //Retrofit Call
         //getRetrofitSupport();
-        getRetrofitSupport5000();
+        //getRetrofitSupport5000();
+        new AsyncNetworkCall(new NetworkResponse()
+        {
+            @Override
+            public void onSuccess(String response)
+            {
+                Log.d(TAG, "onSuccess: " + response);
+            }
+
+            @Override
+            public void onError(String errorMessage)
+            {
+                Log.d(TAG, "onError: " + errorMessage);
+            }
+        }).execute(BASE_URL_5000);
 
     }
 
