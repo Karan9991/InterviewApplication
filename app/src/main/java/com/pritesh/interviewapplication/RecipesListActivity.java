@@ -1,6 +1,7 @@
 package com.pritesh.interviewapplication;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import com.pritesh.interviewapplication.data.food.Recipes;
 import com.pritesh.interviewapplication.network.ApiClient;
 import com.pritesh.interviewapplication.network.ApiInterface;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,32 +26,62 @@ public class RecipesListActivity extends AppCompatActivity
 {
     final static String TAG = RecipesListActivity.class.getCanonicalName();
     final String API_KEY_FOOD3FORK = "daa96adf20a389f3b63634535ec8a938";
+    private SwipeRefreshLayout swipeContainer;
 
     RecyclerView mRecyclerView;
     RecipeRecyclerViewAdapter mDataRecyclerViewAdapter;
+    List<RecipeItem> mArrayDataList;
+    static int pageIndex = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recepie_list);
+
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        mArrayDataList = new ArrayList<>();
+
         mRecyclerView = (RecyclerView)findViewById(R.id.rvDataRecipe);
         mRecyclerView.setHasFixedSize(true);
+
         LinearLayoutManager llm = new LinearLayoutManager(this);
         //llm.setOrientation(LinearLayoutManager.HORIZONTAL);
         //llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
+
         //GridLayoutManager gridLayoutManager = new GridLayoutManager(RecyclerViewDataActivity.this, 3);
         //mRecyclerView.setLayoutManager(gridLayoutManager);
+
         //mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mDataRecyclerViewAdapter = new RecipeRecyclerViewAdapter(RecipesListActivity.this,mArrayDataList);
+        mRecyclerView.setAdapter(mDataRecyclerViewAdapter);
+
         getRetrofitSupport();
+
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getRetrofitSupport();
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+
     }
 
     private void getRetrofitSupport()
     {
+
         ApiInterface apiService =
                 ApiClient.getClientFoodFork().create(ApiInterface.class);
         Map<String, String> data = new HashMap<>();
         data.put("key", API_KEY_FOOD3FORK);
+        data.put("page", String.valueOf(pageIndex++));
         Call<Recipes> apiServiceData = apiService.getAllRecepies(data);
 
         apiServiceData.enqueue(new Callback<Recipes>()
@@ -58,10 +90,9 @@ public class RecipesListActivity extends AppCompatActivity
             public void onResponse(Call<Recipes> call, Response<Recipes> response)
             {
                 //Recipes recipesList = response.body();
-                List<RecipeItem> mArrayDataList = response.body().getRecipes();
-                mDataRecyclerViewAdapter = new RecipeRecyclerViewAdapter(RecipesListActivity.this,mArrayDataList);
-                mRecyclerView.setAdapter(mDataRecyclerViewAdapter);
-                Log.d(TAG, "onResponse: " + response.body().toString());
+                mDataRecyclerViewAdapter.addAll(response.body().getRecipes());
+                //Log.d(TAG, "onResponse: " + response.body().toString());
+                swipeContainer.setRefreshing(false);
             }
 
             @Override

@@ -16,7 +16,8 @@
         </activity>
         <activity android:name=".RecyclerViewDataActivity">
         </activity>
-        <activity android:name=".RecipesListActivity">
+        <activity android:name=".RecipesListActivity"
+            android:label="Recipe List">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

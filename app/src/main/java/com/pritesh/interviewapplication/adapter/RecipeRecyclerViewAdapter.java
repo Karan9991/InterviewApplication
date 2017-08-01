@@ -40,11 +40,13 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
     public void onBindViewHolder(DataViewHolder dataViewHolder, int i)
     {
         RecipeItem dm = mDataModelList.get(i);
-        dataViewHolder.mTextView.setText(dm.getTitle());
+        dataViewHolder.mTextViewTitle.setText(dm.getTitle());
+        dataViewHolder.mTextViewPublisher.setText("Publisher : " + dm.getPublisher());
+        dataViewHolder.mTextViewRatings.setText("Ratings : " + dm.getSocialRank());
 
         Glide.with(mActivity).load(dm.getImageUrl())
                 .thumbnail(1)
-                .into(dataViewHolder.mImageView);
+                .into(dataViewHolder.mImageViewRecipe);
     }
 
     @Override
@@ -57,16 +59,29 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
         return new DataViewHolder(itemView);
     }
 
+    public void clear() {
+        mDataModelList.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items -- change to type used
+    public void addAll(List<RecipeItem> list) {
+        mDataModelList.addAll(list);
+        notifyDataSetChanged();
+    }
+
     static class DataViewHolder extends RecyclerView.ViewHolder
     {
-        TextView mTextView;
-        ImageView mImageView;
+        TextView mTextViewTitle, mTextViewPublisher, mTextViewRatings;
+        ImageView mImageViewRecipe;
 
         DataViewHolder(View view)
         {
             super(view);
-            mTextView = (TextView) view.findViewById(R.id.txtRecipeTitle);
-            mImageView = (ImageView) view.findViewById(R.id.imgRecipe);
+            mTextViewTitle = (TextView) view.findViewById(R.id.txtRecipeTitle);
+            mImageViewRecipe = (ImageView) view.findViewById(R.id.imgRecipe);
+            mTextViewPublisher = (TextView) view.findViewById(R.id.txtPublisher);
+            mTextViewRatings = (TextView) view.findViewById(R.id.txtRatings);
         }
     }
 }
