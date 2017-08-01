@@ -53,7 +53,7 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<DataRecyclerVi
         {
             dataViewHolder.mTextView.setSelected(true);
             dataViewHolder.mTextView.setVisibility(View.VISIBLE);
-            dataViewHolder.mTextView.setText(dm.getText() + " Hello World!!!");
+            dataViewHolder.mTextView.setText(dm.getText() + " Extra Long Long Text added to perform Marquee on given text");
         }
 
         Glide.with(mActivity).load(dm.getUrl())
