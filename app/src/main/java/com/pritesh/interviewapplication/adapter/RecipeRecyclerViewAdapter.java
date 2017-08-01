@@ -66,7 +66,15 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
 
     // Add a list of items -- change to type used
     public void addAll(List<RecipeItem> list) {
-        mDataModelList.addAll(list);
+
+        //mDataModelList.addAll(list);
+        mDataModelList.addAll(0,list);
+        /*
+        for(RecipeItem recipeItem : list)
+        {
+            mDataModelList.add(0,recipeItem);
+        }
+        */
         notifyDataSetChanged();
     }
 

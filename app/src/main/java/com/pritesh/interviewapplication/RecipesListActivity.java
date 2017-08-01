@@ -31,7 +31,7 @@ public class RecipesListActivity extends AppCompatActivity
     RecyclerView mRecyclerView;
     RecipeRecyclerViewAdapter mDataRecyclerViewAdapter;
     List<RecipeItem> mArrayDataList;
-    static int pageIndex = 0;
+    static int pageIndex = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
