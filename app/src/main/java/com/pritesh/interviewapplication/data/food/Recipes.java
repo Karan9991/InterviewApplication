@@ -2,13 +2,14 @@ package com.pritesh.interviewapplication.data.food;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Author: pritesh.patel
  * Created by: ModelGenerator on 2017-06-23
  */
-public class Recipes
+public class Recipes implements Serializable
 {
     public int getCount()
     {

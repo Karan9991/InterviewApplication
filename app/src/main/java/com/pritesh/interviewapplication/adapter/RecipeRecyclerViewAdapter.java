@@ -1,6 +1,8 @@
 package com.pritesh.interviewapplication.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.pritesh.interviewapplication.R;
+import com.pritesh.interviewapplication.RecipeDetailsActivity;
 import com.pritesh.interviewapplication.data.food.RecipeItem;
 
 import java.util.List;
@@ -22,7 +25,7 @@ import java.util.List;
 public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecyclerViewAdapter.DataViewHolder>
 {
     private List<RecipeItem> mDataModelList;
-    private Activity mActivity;
+    private static Activity mActivity;
 
     public RecipeRecyclerViewAdapter(Activity activity, List<RecipeItem> dataModelList)
     {
@@ -41,8 +44,7 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
     {
         RecipeItem dm = mDataModelList.get(i);
         dataViewHolder.mTextViewTitle.setText(dm.getTitle());
-        dataViewHolder.mTextViewPublisher.setText("Publisher : " + dm.getPublisher());
-        dataViewHolder.mTextViewRatings.setText("Ratings : " + dm.getSocialRank());
+        dataViewHolder.card_view.setTag(dm);
 
         Glide.with(mActivity).load(dm.getImageUrl())
                 .thumbnail(1)
@@ -78,18 +80,28 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
         notifyDataSetChanged();
     }
 
-    static class DataViewHolder extends RecyclerView.ViewHolder
+    static class DataViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        TextView mTextViewTitle, mTextViewPublisher, mTextViewRatings;
+        TextView mTextViewTitle;
         ImageView mImageViewRecipe;
+        CardView card_view;
 
         DataViewHolder(View view)
         {
             super(view);
             mTextViewTitle = (TextView) view.findViewById(R.id.txtRecipeTitle);
             mImageViewRecipe = (ImageView) view.findViewById(R.id.imgRecipe);
-            mTextViewPublisher = (TextView) view.findViewById(R.id.txtPublisher);
-            mTextViewRatings = (TextView) view.findViewById(R.id.txtRatings);
+            card_view = (CardView)view.findViewById(R.id.card_view);
+            card_view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view)
+        {
+            RecipeItem rm = (RecipeItem)view.getTag();
+            Intent mIntent = new Intent(mActivity, RecipeDetailsActivity.class);
+            mIntent.putExtra("recipe",rm);
+            mActivity.startActivity(mIntent);
         }
     }
 }

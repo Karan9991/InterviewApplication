@@ -2,11 +2,13 @@ package com.pritesh.interviewapplication.data.food;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Author: pritesh.patel
  * Created by: ModelGenerator on 2017-06-23
  */
-public class RecipeItem
+public class RecipeItem implements Serializable
 {
     public String getPublisher()
     {

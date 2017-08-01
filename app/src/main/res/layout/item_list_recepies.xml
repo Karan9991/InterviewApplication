@@ -40,22 +40,11 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
+                android:textAlignment="center"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 tools:text="Recipe Title"/>
 
-            <TextView
-                android:id="@+id/txtPublisher"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txtRecipeTitle"
-                tools:text="publisher"/>
-
-            <TextView
-                android:id="@+id/txtRatings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txtPublisher"
-                tools:text="Ratings"/>
         </RelativeLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>
