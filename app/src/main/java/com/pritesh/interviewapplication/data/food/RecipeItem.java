@@ -8,20 +8,100 @@ import com.google.gson.annotations.SerializedName;
  */
 public class RecipeItem
 {
+    public String getPublisher()
+    {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher)
+    {
+        this.publisher = publisher;
+    }
+
+    public String getfFUrl()
+    {
+        return fFUrl;
+    }
+
+    public void setfFUrl(String fFUrl)
+    {
+        this.fFUrl = fFUrl;
+    }
+
+    public String getTitle()
+    {
+        return title;
+    }
+
+    public void setTitle(String title)
+    {
+        this.title = title;
+    }
+
+    public String getSourceUrl()
+    {
+        return sourceUrl;
+    }
+
+    public void setSourceUrl(String sourceUrl)
+    {
+        this.sourceUrl = sourceUrl;
+    }
+
+    public String getRecipeId()
+    {
+        return recipeId;
+    }
+
+    public void setRecipeId(String recipeId)
+    {
+        this.recipeId = recipeId;
+    }
+
+    public String getImageUrl()
+    {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl)
+    {
+        this.imageUrl = imageUrl;
+    }
+
+    public double getSocialRank()
+    {
+        return socialRank;
+    }
+
+    public void setSocialRank(double socialRank)
+    {
+        this.socialRank = socialRank;
+    }
+
+    public String getPublisherUrl()
+    {
+        return publisherUrl;
+    }
+
+    public void setPublisherUrl(String publisherUrl)
+    {
+        this.publisherUrl = publisherUrl;
+    }
+
     @SerializedName("publisher")
-    public String publisher;
-    @SerializedName("fFUrl")
-    public String fFUrl;
+    private String publisher;
+    @SerializedName("f2f_url")
+    private String fFUrl;
     @SerializedName("title")
-    public String title;
-    @SerializedName("sourceUrl")
-    public String sourceUrl;
-    @SerializedName("recipeId")
-    public String recipeId;
-    @SerializedName("imageUrl")
-    public String imageUrl;
-    @SerializedName("socialRank")
-    public double socialRank;
-    @SerializedName("publisherUrl")
-    public String publisherUrl;
+    private String title;
+    @SerializedName("source_url")
+    private String sourceUrl;
+    @SerializedName("recipe_id")
+    private String recipeId;
+    @SerializedName("image_url")
+    private String imageUrl;
+    @SerializedName("social_rank")
+    private double socialRank;
+    @SerializedName("publisher_url")
+    private String publisherUrl;
 }

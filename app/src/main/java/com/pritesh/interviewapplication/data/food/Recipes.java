@@ -2,7 +2,7 @@ package com.pritesh.interviewapplication.data.food;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Author: pritesh.patel
@@ -10,8 +10,28 @@ import java.util.ArrayList;
  */
 public class Recipes
 {
+    public int getCount()
+    {
+        return count;
+    }
+
+    public void setCount(int count)
+    {
+        this.count = count;
+    }
+
+    public List<RecipeItem> getRecipes()
+    {
+        return recipes;
+    }
+
+    public void setRecipes(List<RecipeItem> recipes)
+    {
+        this.recipes = recipes;
+    }
+
     @SerializedName("count")
-    public int count;
+    private int count;
     @SerializedName("recipes")
-    public ArrayList<RecipeItem> recipes;
+    private List<RecipeItem> recipes;
 }

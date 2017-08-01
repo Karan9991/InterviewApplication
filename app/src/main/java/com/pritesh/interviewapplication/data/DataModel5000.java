@@ -69,7 +69,4 @@ public class DataModel5000
     {
         this.thumbnailUrl = thumbnailUrl;
     }
-
-
-
 }
