@@ -30,10 +30,10 @@ public interface ApiInterface {
     //http://food2fork.com/api/search?key=daa96adf20a389f3b63634535ec8a938&page=1@sort=r //Ratings
     //http://food2fork.com/api/search?key=daa96adf20a389f3b63634535ec8a938&page=1@sort=7 //Trend
     @GET("/api/search")
-    Call<Recipes> getAllRecepies(@QueryMap Map<String, String> options);
+    Call<Recipes> getAllRecipes(@QueryMap Map<String, String> options);
 
     //http://food2fork.com/api/search?key=daa96adf20a389f3b63634535ec8a938&q=shredded%20chicken
     @GET("/api/search")
-    Call<List<Recipes>> searchRecepie(@Query("key") String apiKey,
+    Call<List<Recipes>> searchRecipe(@Query("key") String apiKey,
                                       @Query("q") String searchString);
 }

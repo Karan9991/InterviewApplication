@@ -1,11 +1,18 @@
 package com.pritesh.interviewapplication;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.pritesh.interviewapplication.adapter.RecipeRecyclerViewAdapter;
 import com.pritesh.interviewapplication.data.food.RecipeItem;
@@ -22,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RecipesListActivity extends AppCompatActivity
+public class RecipesListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener
 {
     final static String TAG = RecipesListActivity.class.getCanonicalName();
     final String API_KEY_FOOD3FORK = "daa96adf20a389f3b63634535ec8a938";
@@ -32,6 +39,8 @@ public class RecipesListActivity extends AppCompatActivity
     RecipeRecyclerViewAdapter mDataRecyclerViewAdapter;
     List<RecipeItem> mArrayDataList;
     static int pageIndex = 1;
+    SearchView searchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -76,13 +85,12 @@ public class RecipesListActivity extends AppCompatActivity
 
     private void getRetrofitSupport()
     {
-
         ApiInterface apiService =
                 ApiClient.getClientFoodFork().create(ApiInterface.class);
         Map<String, String> data = new HashMap<>();
         data.put("key", API_KEY_FOOD3FORK);
         data.put("page", String.valueOf(pageIndex++));
-        Call<Recipes> apiServiceData = apiService.getAllRecepies(data);
+        Call<Recipes> apiServiceData = apiService.getAllRecipes(data);
 
         apiServiceData.enqueue(new Callback<Recipes>()
         {
@@ -103,4 +111,67 @@ public class RecipesListActivity extends AppCompatActivity
             }
         });
     }
+
+    private void getRecipeSearch(String searchQuery)
+    {
+        ApiInterface apiService =
+                ApiClient.getClientFoodFork().create(ApiInterface.class);
+        Map<String, String> data = new HashMap<>();
+        data.put("key", API_KEY_FOOD3FORK);
+        data.put("page", String.valueOf(pageIndex++));
+        data.put("q", searchQuery);
+        Call<Recipes> apiServiceData = apiService.getAllRecipes(data);
+
+        apiServiceData.enqueue(new Callback<Recipes>()
+        {
+            @Override
+            public void onResponse(Call<Recipes> call, Response<Recipes> response)
+            {
+                if(response.body().getRecipes().size() !=0)
+                {
+                    mDataRecyclerViewAdapter.clear();
+                    mDataRecyclerViewAdapter.addAll(response.body().getRecipes());
+                    swipeContainer.setRefreshing(false);
+                }
+                else
+                {
+                    Toast.makeText(RecipesListActivity.this, "No Data Found...", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Recipes> call, Throwable t)
+            {
+                Log.d(TAG, "onFailure :" );
+                t.printStackTrace();
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(this);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        // Here is where we are going to implement the filter logic
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+
+        // Close the soft keyboard from a Test
+        ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+        Log.d(TAG, "onQueryTextSubmit: "  + query);
+        getRecipeSearch(query);
+        return true;
+    }
+
 }

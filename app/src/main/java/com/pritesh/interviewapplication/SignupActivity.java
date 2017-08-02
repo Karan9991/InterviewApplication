@@ -125,7 +125,7 @@ public class SignupActivity extends Activity
                     //realmUser.copyToRealmOrUpdate(mUser);
                 } catch(RealmPrimaryKeyConstraintException | RealmException re)
                 {
-                    Toast.makeText(SignupActivity.this, re.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignupActivity.this, "Email Already exist", Toast.LENGTH_LONG).show();
                 }
 
             }
