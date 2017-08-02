@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">InterviewApplication</string>
+    <string name="app_name">Recipe</string>
     <string name="title_activity_recipe_details">Recipe Details</string>
 </resources>

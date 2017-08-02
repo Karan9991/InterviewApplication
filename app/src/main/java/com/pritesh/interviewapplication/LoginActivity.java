@@ -11,6 +11,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pritesh.interviewapplication.data.User;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 
 public class LoginActivity extends Activity
 {
@@ -23,11 +28,14 @@ public class LoginActivity extends Activity
     Button _loginButton;
     TextView _signupLink;
 
+    private Realm realmUser;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         _emailText = (EditText) findViewById(R.id.input_email);
         _passwordText = (EditText) findViewById(R.id.input_password);
         _loginButton = (Button) findViewById(R.id.btn_login);
@@ -72,8 +80,8 @@ public class LoginActivity extends Activity
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        final String email = _emailText.getText().toString();
+        final String password = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
 
@@ -83,9 +91,31 @@ public class LoginActivity extends Activity
                     public void run()
                     {
                         // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
-                        // onLoginFailed();
-                        progressDialog.dismiss();
+
+                        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
+                        Realm.deleteRealm(realmConfiguration);
+                        realmUser = Realm.getInstance(realmConfiguration);
+                        realmUser.executeTransaction(new Realm.Transaction()
+                        {
+                            @Override
+                            public void execute(Realm realm) {
+                                //Search for the user
+                                User mUser = realm.where(User.class)
+                                        .equalTo("userEmail", email)
+                                        .equalTo("userPassword",password)
+                                        .findFirst();
+                                progressDialog.dismiss();
+                                if(mUser != null)
+                                {
+                                    onLoginSuccess();
+                                }
+                                else
+                                {
+                                    onLoginFailed();
+                                }
+                            }
+                        });
+
                     }
                 }, 3000);
     }
@@ -98,10 +128,7 @@ public class LoginActivity extends Activity
         {
             if(resultCode == RESULT_OK)
             {
-
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
-                this.finish();
+                //this.finish();
             }
         }
     }
@@ -154,5 +181,11 @@ public class LoginActivity extends Activity
         }
 
         return valid;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realmUser.close();
     }
 }

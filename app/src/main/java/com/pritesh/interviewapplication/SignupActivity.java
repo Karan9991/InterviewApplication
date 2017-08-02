@@ -10,17 +10,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pritesh.interviewapplication.data.User;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 public class SignupActivity extends Activity
 {
-
     private static final String TAG = SignupActivity.class.getName();
-
-
     EditText _nameText;
     EditText _emailText;
     EditText _passwordText;
     Button _signupButton;
     TextView _loginLink;
+
+    private Realm realmUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -52,6 +56,10 @@ public class SignupActivity extends Activity
                 finish();
             }
         });
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
+        Realm.deleteRealm(realmConfiguration);
+        realmUser = Realm.getInstance(realmConfiguration);
     }
 
     public void signup()
@@ -71,9 +79,9 @@ public class SignupActivity extends Activity
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
 
-        String name = _nameText.getText().toString();
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        final String name = _nameText.getText().toString();
+        final String email = _emailText.getText().toString();
+        final String password = _passwordText.getText().toString();
 
         // TODO: Implement your own signup logic here.
 
@@ -82,7 +90,7 @@ public class SignupActivity extends Activity
                 {
                     public void run()
                     {
-                        onSignupSuccess();
+                        onSignupSuccess(name,email,password);
                         // onSignupFailed();
                         progressDialog.dismiss();
                     }
@@ -90,8 +98,18 @@ public class SignupActivity extends Activity
     }
 
 
-    public void onSignupSuccess()
+    public void onSignupSuccess(final String name, final String email, final String password)
     {
+        //Add new user record
+        realmUser.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                User mUser = realm.createObject(User.class);
+                mUser.setUserName(name);
+                mUser.setUserEmail(email);
+                mUser.setUserPassword(password);
+            }
+        });
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
         finish();
@@ -140,5 +158,11 @@ public class SignupActivity extends Activity
         }
 
         return valid;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realmUser.close();
     }
 }
