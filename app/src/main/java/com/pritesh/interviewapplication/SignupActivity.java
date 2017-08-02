@@ -13,7 +13,8 @@ import android.widget.Toast;
 import com.pritesh.interviewapplication.data.User;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
+import io.realm.exceptions.RealmException;
+import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
 public class SignupActivity extends Activity
 {
@@ -57,9 +58,10 @@ public class SignupActivity extends Activity
             }
         });
 
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
-        Realm.deleteRealm(realmConfiguration);
-        realmUser = Realm.getInstance(realmConfiguration);
+        //RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
+        //Realm.deleteRealm(realmConfiguration);
+        //realmUser = Realm.getInstance(realmConfiguration);
+        realmUser = Realm.getDefaultInstance();
     }
 
     public void signup()
@@ -90,7 +92,7 @@ public class SignupActivity extends Activity
                 {
                     public void run()
                     {
-                        onSignupSuccess(name,email,password);
+                        onSignupSuccess(name, email, password);
                         // onSignupFailed();
                         progressDialog.dismiss();
                     }
@@ -101,13 +103,31 @@ public class SignupActivity extends Activity
     public void onSignupSuccess(final String name, final String email, final String password)
     {
         //Add new user record
-        realmUser.executeTransaction(new Realm.Transaction() {
+        final User mUser = new User();
+        mUser.setUserName(name);
+        mUser.setUserEmail(email);
+        mUser.setUserPassword(password);
+        //realmUser.createObject(User.class, mUser);
+
+        realmUser.executeTransaction(new Realm.Transaction()
+        {
             @Override
-            public void execute(Realm realm) {
-                User mUser = realm.createObject(User.class);
-                mUser.setUserName(name);
-                mUser.setUserEmail(email);
-                mUser.setUserPassword(password);
+            public void execute(Realm realm)
+            {
+                try
+                {
+                    // This will create a new object in Realm or throw an exception if the
+                    // object already exists (same primary key)
+                    realmUser.copyToRealm(mUser);
+
+                    // This will update an existing object with the same primary key
+                    // or create a new object if an object with no primary key
+                    //realmUser.copyToRealmOrUpdate(mUser);
+                } catch(RealmPrimaryKeyConstraintException | RealmException re)
+                {
+                    Toast.makeText(SignupActivity.this, re.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
             }
         });
         _signupButton.setEnabled(true);
@@ -161,7 +181,8 @@ public class SignupActivity extends Activity
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroy()
+    {
         super.onDestroy();
         realmUser.close();
     }

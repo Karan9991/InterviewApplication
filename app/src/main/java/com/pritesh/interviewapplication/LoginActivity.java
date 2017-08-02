@@ -14,12 +14,11 @@ import android.widget.Toast;
 import com.pritesh.interviewapplication.data.User;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 
 public class LoginActivity extends Activity
 {
-
     private static final String TAG = LoginActivity.class.getName();
     private static final int REQUEST_SIGNUP = 0;
 
@@ -92,20 +91,20 @@ public class LoginActivity extends Activity
                     {
                         // On complete call either onLoginSuccess or onLoginFailed
 
-                        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
-                        Realm.deleteRealm(realmConfiguration);
-                        realmUser = Realm.getInstance(realmConfiguration);
+                        //RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
+                        //Realm.deleteRealm(realmConfiguration);
+                        realmUser = Realm.getDefaultInstance();
                         realmUser.executeTransaction(new Realm.Transaction()
                         {
                             @Override
                             public void execute(Realm realm) {
                                 //Search for the user
-                                User mUser = realm.where(User.class)
+                                RealmResults<User> mUser = realm.where(User.class)
                                         .equalTo("userEmail", email)
                                         .equalTo("userPassword",password)
-                                        .findFirst();
+                                        .findAll();
                                 progressDialog.dismiss();
-                                if(mUser != null)
+                                if(mUser.size() != 0)
                                 {
                                     onLoginSuccess();
                                 }
