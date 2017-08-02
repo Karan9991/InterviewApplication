@@ -18,17 +18,27 @@
         <activity
             android:name=".RecipesListActivity"
             android:label="Recipe List">
+
+        </activity>
+        <activity
+            android:name=".RecipeDetailsActivity"
+            android:label="@string/title_activity_recipe_details"
+            android:parentActivityName=".RecipesListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".RecipesListActivity"/>
+        </activity>
+        <activity android:name=".LoginActivity" android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:parentActivityName=".RecipesListActivity"
-            android:name=".RecipeDetailsActivity"
-            android:label="@string/title_activity_recipe_details"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".SignupActivity" android:theme="@style/AppTheme.Dark">
         </activity>
     </application>
 
