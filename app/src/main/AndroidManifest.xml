@@ -19,7 +19,6 @@
         <activity
             android:name=".RecipesListActivity"
             android:label="Recipe List">
-
         </activity>
         <activity
             android:name=".RecipeDetailsActivity"
@@ -32,14 +31,21 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".RecipesListActivity"/>
         </activity>
-        <activity android:name=".LoginActivity" android:theme="@style/AppTheme.Dark">
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.Dark">
+
+        </activity>
+        <activity
+            android:name=".SignupActivity"
+            android:theme="@style/AppTheme.Dark">
+        </activity>
+        <activity android:name=".FavoriteRecipeListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".SignupActivity" android:theme="@style/AppTheme.Dark">
         </activity>
     </application>
 

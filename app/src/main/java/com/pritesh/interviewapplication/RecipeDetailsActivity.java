@@ -10,7 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.pritesh.interviewapplication.data.food.Favorite;
 import com.pritesh.interviewapplication.data.food.RecipeItem;
+
+import io.realm.Realm;
+import io.realm.exceptions.RealmException;
+import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
 public class RecipeDetailsActivity extends AppCompatActivity
 {
@@ -41,8 +46,43 @@ public class RecipeDetailsActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                Snackbar.make(view, "Add to Favourite list", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
+                final View mView = view;
+                final Realm realmFavorite = Realm.getDefaultInstance();
+                final Favorite mFavorite = new Favorite();
+                mFavorite.setfFUrl(mRecipeItem.getfFUrl());
+                mFavorite.setImageUrl(mRecipeItem.getImageUrl());
+                mFavorite.setPublisher(mRecipeItem.getPublisher());
+                mFavorite.setPublisherUrl(mRecipeItem.getPublisherUrl());
+                mFavorite.setRecipeId(mRecipeItem.getRecipeId());
+                mFavorite.setSocialRank(mRecipeItem.getSocialRank());
+                mFavorite.setTitle(mRecipeItem.getTitle());
+                mFavorite.setSourceUrl(mRecipeItem.getSourceUrl());
+
+                realmFavorite.executeTransaction(new Realm.Transaction()
+                {
+                    @Override
+                    public void execute(Realm realm)
+                    {
+                        try
+                        {
+                            // This will create a new object in Realm or throw an exception if the
+                            // object already exists (same primary key)
+                            realmFavorite.copyToRealm(mFavorite);
+                            Snackbar.make(mView, "Add to Favourite list", Snackbar.LENGTH_SHORT)
+                                    .setAction("Action", null).show();
+
+                            // This will update an existing object with the same primary key
+                            // or create a new object if an object with no primary key
+                            //realmUser.copyToRealmOrUpdate(mUser);
+                        } catch(RealmPrimaryKeyConstraintException | RealmException re)
+                        {
+                            Snackbar.make(mView, "Item already in favorite list", Snackbar.LENGTH_SHORT)
+                                    .setAction("Action", null).show();
+                        }
+
+                    }
+                });
+                realmFavorite.close();
             }
         });
 
