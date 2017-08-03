@@ -40,10 +40,15 @@
             android:theme="@style/AppTheme.Dark">
         </activity>
         <activity android:name=".FavoriteRecipeListActivity">
+        </activity>
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar">
 
         </activity>
-        <activity android:name=".SplashActivity"
-                  android:theme="@android:style/Theme.Black.NoTitleBar">
+        <activity android:name=".ProfileUpdateActivity"
+                  android:theme="@style/AppTheme.Dark"
+            android:label="User Profile">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
