@@ -1,6 +1,7 @@
 package com.pritesh.interviewapplication.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.pritesh.interviewapplication.R;
+import com.pritesh.interviewapplication.RecipeDetailsActivity;
 import com.pritesh.interviewapplication.data.food.Favorite;
 
 import java.util.List;
@@ -97,11 +99,13 @@ public class FavoriteRecipeRecyclerViewAdapter extends RecyclerView.Adapter<Favo
             mRealmFavorite.commitTransaction();
             notifyDataSetChanged();
             Toast.makeText(mActivity, "Remove", Toast.LENGTH_SHORT).show();
-        }
+        }else if(view.getId() == R.id.card_view)
+        {
 
-        //Intent mIntent = new Intent(mActivity, RecipeDetailsActivity.class);
-        //mIntent.putExtra("recipe",rm);
-        //mActivity.startActivity(mIntent);
+            Intent mIntent = new Intent(mActivity, RecipeDetailsActivity.class);
+            //mIntent.putExtra("recipe",rm);
+            //mActivity.startActivity(mIntent);
+        }
     }
 
     static class DataViewHolder extends RecyclerView.ViewHolder
