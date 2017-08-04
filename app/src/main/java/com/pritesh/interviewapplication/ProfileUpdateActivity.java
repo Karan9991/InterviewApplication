@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,13 +15,13 @@ import io.realm.Realm;
 
 public class ProfileUpdateActivity extends Activity
 {
-
     EditText nameText, oldPasswordText, passwordText, confirmPasswordText, mobileText;
     TextView emailText;
     Button updateButton;
     Realm mUserRealm;
     String mUserEmail;
     User mUser, updatedUser;
+    Switch mSwitchTouchId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,7 +37,7 @@ public class ProfileUpdateActivity extends Activity
         confirmPasswordText = (EditText) findViewById(R.id.input_confirm_password);
         mobileText = (EditText) findViewById(R.id.input_mobile);
         updateButton = (Button) findViewById(R.id.btn_update);
-
+        mSwitchTouchId = (Switch) findViewById(R.id.switchTouchID);
         updateButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -45,6 +46,7 @@ public class ProfileUpdateActivity extends Activity
                 validate();
             }
         });
+
         setData();
     }
 
