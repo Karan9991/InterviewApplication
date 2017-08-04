@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Recipe</string>
     <string name="title_activity_recipe_details">Recipe Details</string>
+    <string name="instructions">
+Place your fingertip on the Home button to verify your identity
+</string>
 </resources>
