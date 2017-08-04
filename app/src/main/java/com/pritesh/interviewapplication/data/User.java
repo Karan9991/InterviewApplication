@@ -19,6 +19,8 @@ public class User extends RealmObject
     @Required
     private String userPassword;
 
+    private String userMobile;
+
     public void setUserName(String userName)
     {
         this.userName = userName;
@@ -47,5 +49,15 @@ public class User extends RealmObject
     public String getUserEmail()
     {
         return this.userEmail;
+    }
+
+    public void setUserMobile(String userMobile)
+    {
+        this.userMobile = userMobile;
+    }
+
+    public String getUserMobile()
+    {
+        return this.userMobile;
     }
 }

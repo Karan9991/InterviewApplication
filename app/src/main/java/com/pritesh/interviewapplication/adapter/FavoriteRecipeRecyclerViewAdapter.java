@@ -1,8 +1,6 @@
 package com.pritesh.interviewapplication.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +11,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.pritesh.interviewapplication.R;
-import com.pritesh.interviewapplication.RecipeDetailsActivity;
 import com.pritesh.interviewapplication.data.food.Favorite;
 
 import java.util.List;
@@ -47,14 +44,18 @@ public class FavoriteRecipeRecyclerViewAdapter extends RecyclerView.Adapter<Favo
     {
         Favorite dm = mDataModelList.get(i);
         dataViewHolder.mTextViewTitle.setText(dm.getTitle());
-        dataViewHolder.card_view.setTag(dm);
         dataViewHolder.mImageViewRemove.setTag(dm);
-        dataViewHolder.card_view.setOnClickListener(this);
         dataViewHolder.mImageViewRemove.setOnClickListener(this);
 
         Glide.with(mActivity).load(dm.getImageUrl())
                 .thumbnail(1)
                 .into(dataViewHolder.mImageViewRecipe);
+
+        dataViewHolder.txtRatings.setText("Social Ratings : " + dm.getSocialRank());
+        dataViewHolder.txtPublisher.setText("Publisher : " + dm.getPublisher());
+        dataViewHolder.txtSourceUrl.setText("Url : " + dm.getSourceUrl());
+        dataViewHolder.txtPublisherUrl.setText("Publisher info : " + dm.getPublisherUrl());
+
     }
 
     @Override
@@ -72,17 +73,8 @@ public class FavoriteRecipeRecyclerViewAdapter extends RecyclerView.Adapter<Favo
         notifyDataSetChanged();
     }
 
-    // Add a list of items -- change to type used
     public void addAll(List<Favorite> list) {
-
-        //mDataModelList.addAll(list);
         mDataModelList.addAll(0,list);
-        /*
-        for(RecipeItem recipeItem : list)
-        {
-            mDataModelList.add(0,recipeItem);
-        }
-        */
         notifyDataSetChanged();
     }
 
@@ -99,20 +91,13 @@ public class FavoriteRecipeRecyclerViewAdapter extends RecyclerView.Adapter<Favo
             mRealmFavorite.commitTransaction();
             notifyDataSetChanged();
             Toast.makeText(mActivity, "Remove", Toast.LENGTH_SHORT).show();
-        }else if(view.getId() == R.id.card_view)
-        {
-
-            Intent mIntent = new Intent(mActivity, RecipeDetailsActivity.class);
-            //mIntent.putExtra("recipe",rm);
-            //mActivity.startActivity(mIntent);
         }
     }
 
     static class DataViewHolder extends RecyclerView.ViewHolder
     {
-        TextView mTextViewTitle;
+        TextView mTextViewTitle, txtPublisher, txtRatings, txtSourceUrl, txtPublisherUrl;
         ImageView mImageViewRecipe, mImageViewRemove;
-        CardView card_view;
 
         DataViewHolder(View view)
         {
@@ -120,7 +105,12 @@ public class FavoriteRecipeRecyclerViewAdapter extends RecyclerView.Adapter<Favo
             mTextViewTitle = (TextView) view.findViewById(R.id.txtRecipeTitle);
             mImageViewRecipe = (ImageView) view.findViewById(R.id.imgRecipe);
             mImageViewRemove = (ImageView) view.findViewById(R.id.imgRemove);
-            card_view = (CardView)view.findViewById(R.id.card_view);
+            txtRatings = (TextView) view.findViewById(R.id.txtRatings);
+            txtPublisher = (TextView) view.findViewById(R.id.txtPublisher);
+            txtSourceUrl = (TextView) view.findViewById(R.id.txtUrl);
+            txtSourceUrl.setSelected(true);
+            txtPublisherUrl = (TextView) view.findViewById(R.id.txtPublisherUrl);
+            txtPublisherUrl.setSelected(true);
         }
     }
 }

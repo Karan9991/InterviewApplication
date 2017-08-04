@@ -6,5 +6,16 @@
         android:title="Search Recipe"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_favorite"
+        android:title="Favorite"
+        android:icon="@android:drawable/btn_star_big_on"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_info"
+        android:title="Favorite"
+        android:icon="@android:drawable/ic_dialog_info"
+        app:showAsAction="always"/>
 </menu>
 

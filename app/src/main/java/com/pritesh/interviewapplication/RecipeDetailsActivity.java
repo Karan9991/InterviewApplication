@@ -104,7 +104,6 @@ public class RecipeDetailsActivity extends AppCompatActivity
         txtPublisherUrl = (TextView) findViewById(R.id.txtPublisherUrl);
         txtPublisherUrl.setSelected(true);
         txtPublisherUrl.setText("Publisher info : " + mRecipeItem.getPublisherUrl());
-
     }
 
 }

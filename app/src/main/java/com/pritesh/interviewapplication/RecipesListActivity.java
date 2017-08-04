@@ -1,6 +1,7 @@
 package com.pritesh.interviewapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -156,6 +157,24 @@ public class RecipesListActivity extends AppCompatActivity implements SearchView
         searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(this);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_favorite) {
+            Intent intent = new Intent(this,FavoriteRecipeListActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        if (id == R.id.action_info) {
+            Intent intent = new Intent(this,ProfileUpdateActivity.class);
+            startActivity(intent);
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

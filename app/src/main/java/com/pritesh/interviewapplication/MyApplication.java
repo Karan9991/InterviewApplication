@@ -11,10 +11,21 @@ import io.realm.Realm;
 
 public class MyApplication extends Application
 {
+    String mUserEmail;
     @Override
     public void onCreate()
     {
         super.onCreate();
         Realm.init(this);
+    }
+
+    public void setLoggedInUserEmail(String mUserEmail)
+    {
+        this.mUserEmail = mUserEmail;
+    }
+
+    public String getLoggedInUserEmail()
+    {
+        return this.mUserEmail;
     }
 }

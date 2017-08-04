@@ -106,6 +106,7 @@ public class LoginActivity extends Activity
                                 progressDialog.dismiss();
                                 if(mUser.size() != 0)
                                 {
+                                    ((MyApplication)getApplicationContext()).setLoggedInUserEmail(mUser.get(0).getUserEmail());
                                     onLoginSuccess();
                                 }
                                 else
