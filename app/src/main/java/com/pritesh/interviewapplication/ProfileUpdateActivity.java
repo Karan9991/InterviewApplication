@@ -20,7 +20,7 @@ public class ProfileUpdateActivity extends Activity
     Button updateButton;
     Realm mUserRealm;
     String mUserEmail;
-    User mUser;
+    User mUser, updatedUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -50,6 +50,7 @@ public class ProfileUpdateActivity extends Activity
 
     private void setData()
     {
+        updatedUser = new User();
         mUserRealm = Realm.getDefaultInstance();
         mUserRealm.executeTransaction(new Realm.Transaction()
         {
@@ -63,8 +64,10 @@ public class ProfileUpdateActivity extends Activity
 
                 if(mUser != null)
                 {
+                    updatedUser.setUserEmail(mUserEmail);
                     nameText.setText(mUser.getUserName());
                     emailText.setText("Email : " + mUser.getUserEmail());
+                    mobileText.setText(mUser.getUserMobile());
                 } else
                 {
                     Toast.makeText(ProfileUpdateActivity.this, "Error!!! Retrieving User info", Toast.LENGTH_SHORT).show();
@@ -89,6 +92,7 @@ public class ProfileUpdateActivity extends Activity
             valid = false;
         } else
         {
+            updatedUser.setUserName(name);
             nameText.setError(null);
         }
 
@@ -100,6 +104,7 @@ public class ProfileUpdateActivity extends Activity
                 valid = false;
             } else
             {
+                updatedUser.setUserMobile(mobile);
                 mobileText.setError(null);
             }
         }
@@ -124,6 +129,7 @@ public class ProfileUpdateActivity extends Activity
                     {
                         if(passwordNew.equals(passwordCnew))
                         {
+                            updatedUser.setUserPassword(passwordNew);
                             confirmPasswordText.setError(null);
                         } else
                         {
@@ -138,6 +144,10 @@ public class ProfileUpdateActivity extends Activity
                 valid = false;
             }
         }
+        else
+        {
+            updatedUser.setUserPassword(mUser.getUserPassword());
+        }
         if(valid)
         {
             mUserRealm.executeTransaction(new Realm.Transaction()
@@ -145,13 +155,7 @@ public class ProfileUpdateActivity extends Activity
                 @Override
                 public void execute(Realm realm)
                 {
-                    mUser.setUserName(name);
-                    mUser.setUserMobile(mobile);
-                    if(!passwordCnew.isEmpty())
-                    {
-                        mUser.setUserPassword(passwordCnew);
-                    }
-                    mUserRealm.copyToRealmOrUpdate(mUser);
+                    mUserRealm.copyToRealmOrUpdate(updatedUser);
                     Toast.makeText(ProfileUpdateActivity.this, "User info updated successfully", Toast.LENGTH_SHORT).show();
                 }
             });
