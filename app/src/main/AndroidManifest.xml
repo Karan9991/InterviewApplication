@@ -34,26 +34,26 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.Dark">
+
         </activity>
         <activity
             android:name=".SignupActivity"
             android:theme="@style/AppTheme.Dark">
         </activity>
-        <activity android:name=".FavoriteRecipeListActivity">
+        <activity android:name=".FavoriteRecipeListActivity"
+                  android:theme="@style/AppTheme.Dark">
         </activity>
-        <activity
-            android:name=".SplashActivity"
-            android:theme="@android:style/Theme.Black.NoTitleBar">
 
-        </activity>
-        <activity android:name=".ProfileUpdateActivity"
-                  android:theme="@style/AppTheme.Dark"
-            android:label="User Profile">
+        <activity android:name=".SplashActivity"
+                  android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".ProfileUpdateActivity">
+
         </activity>
     </application>
 

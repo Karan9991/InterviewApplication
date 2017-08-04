@@ -90,6 +90,7 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
         {
             super(view);
             mTextViewTitle = (TextView) view.findViewById(R.id.txtRecipeTitle);
+            mTextViewTitle.setSelected(true);
             mImageViewRecipe = (ImageView) view.findViewById(R.id.imgRecipe);
 
             card_view = (CardView)view.findViewById(R.id.card_view);

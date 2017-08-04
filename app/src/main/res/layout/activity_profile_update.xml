@@ -7,6 +7,7 @@
     android:fitsSystemWindows="true">
 
     <LinearLayout
+        android:background="@color/primary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -19,9 +20,9 @@
             android:id="@+id/input_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold|italic"
-            android:textSize="24sp"
-            android:text="pritesh@moxdroidlabs.com"/>
+            android:text="pritesh@moxdroidlabs.com"
+            android:textSize="18sp"
+            android:textStyle="bold|italic"/>
 
         <!--  Name Label -->
         <android.support.design.widget.TextInputLayout
@@ -58,14 +59,14 @@
             android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/primary_darker"
+
             card_view:cardCornerRadius="4dp">
 
             <LinearLayout
+                android:backgroundTint="@color/primary_dark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/primary"
                 android:layout_margin="5dp"
                 android:paddingTop="16dp">
                 <!-- Password Label -->

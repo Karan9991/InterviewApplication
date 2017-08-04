@@ -20,7 +20,7 @@ import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 public class RecipeDetailsActivity extends AppCompatActivity
 {
 
-    TextView txtPublisher, txtRatings;
+    TextView txtPublisher, txtRatings, txtSourceUrl, txtPublisherUrl;
     ImageView mImageViewRecipe;
     RecipeItem mRecipeItem;
     @Override
@@ -92,10 +92,18 @@ public class RecipeDetailsActivity extends AppCompatActivity
                 .into(mImageViewRecipe);
 
         txtRatings = (TextView) findViewById(R.id.txtRatings);
-        txtRatings.setText("Ratings : " + mRecipeItem.getSocialRank());
+        txtRatings.setText("Social Ratings : " + mRecipeItem.getSocialRank());
 
         txtPublisher = (TextView) findViewById(R.id.txtPublisher);
         txtPublisher.setText("Publisher : " + mRecipeItem.getPublisher());
+
+        txtSourceUrl = (TextView) findViewById(R.id.txtUrl);
+        txtSourceUrl.setSelected(true);
+        txtSourceUrl.setText("Url : " + mRecipeItem.getSourceUrl());
+
+        txtPublisherUrl = (TextView) findViewById(R.id.txtPublisherUrl);
+        txtPublisherUrl.setSelected(true);
+        txtPublisherUrl.setText("Publisher info : " + mRecipeItem.getPublisherUrl());
 
     }
 
