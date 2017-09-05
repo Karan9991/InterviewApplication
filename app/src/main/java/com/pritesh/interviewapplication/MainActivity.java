@@ -1,6 +1,7 @@
 package com.pritesh.interviewapplication;
 
 import android.app.ProgressDialog;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import com.pritesh.interviewapplication.data.DataModel;
 import com.pritesh.interviewapplication.data.DataModel5000;
 import com.pritesh.interviewapplication.network.ApiClient;
 import com.pritesh.interviewapplication.network.ApiInterface;
+import com.pritesh.interviewapplication.utils.NetworkStateReceiver;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements NetworkStateReceiver.NetworkStateReceiverListener
 {
     private  String TAG = MainActivity.class.getCanonicalName();
     ListView lstData;
@@ -43,11 +45,16 @@ public class MainActivity extends AppCompatActivity
     ArrayList<DataModel> mArrayDataList;
     String BASE_URL = "https://s3.amazonaws.com/mobile-tor/test/images.json";
     String BASE_URL_5000 = "https://jsonplaceholder.typicode.com/photos";
+    private NetworkStateReceiver networkStateReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        networkStateReceiver = new NetworkStateReceiver();
+        networkStateReceiver.addListener(this);
+        this.registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
 
         lstData = (ListView)findViewById(R.id.lstData);
         mArrayDataList = new ArrayList<>();
@@ -138,6 +145,18 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    @Override
+    public void networkAvailable()
+    {
+
+    }
+
+    @Override
+    public void networkUnavailable()
+    {
+
+    }
+
     // DownloadImage AsyncTask
     private class DownloadData extends AsyncTask<String, Void, String>
     {
@@ -216,6 +235,12 @@ public class MainActivity extends AppCompatActivity
             lstData.setAdapter(mDataAdapter);
             mProgressDialog.dismiss();
         }
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+        networkStateReceiver.removeListener(this);
+        this.unregisterReceiver(networkStateReceiver);
     }
 
     private String convertInputStreamToString(InputStream inputStream) throws IOException
