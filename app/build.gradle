@@ -36,6 +36,23 @@ sonarqube {
     }
 }
 
+/*
+//Java Profile
+sonarqube {
+    //./gradlew sonar
+    properties {
+        property "sonar.projectName", "Pritesh Patel"
+        property "sonar.projectKey", "pritesh"
+        property "sonar.host.url", "http://127.0.0.1:9000"
+        property "sonar.language", "java"
+        property "sonar.sources", "src/main/java"
+        property "sonar.projectVersion","1.0"
+        property "sonar.login", "admin"
+        property "sonar.password", "admin"
+    }
+}
+*/
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
