@@ -30,14 +30,14 @@ class RecipeDetailsActivity : AppCompatActivity() {
 
         this.title = mRecipeItem.title
 
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         //Back Button support
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
-        val fab = findViewById(R.id.fab) as FloatingActionButton
+        val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener { view ->
             val realmFavorite = Realm.getDefaultInstance()
             val mFavorite = Favorite()
@@ -71,22 +71,22 @@ class RecipeDetailsActivity : AppCompatActivity() {
             realmFavorite.close()
         }
 
-        mImageViewRecipe = findViewById(R.id.ivRecipe) as ImageView
+        mImageViewRecipe = findViewById<ImageView>(R.id.ivRecipe)
         Glide.with(this).load(mRecipeItem.imageUrl)
                 .thumbnail(1f)
                 .into(mImageViewRecipe)
 
-        txtRatings = findViewById(R.id.txtRatings) as TextView
+        txtRatings = findViewById<TextView>(R.id.txtRatings)
         txtRatings.text = "Social Ratings : " + mRecipeItem.socialRank
 
-        txtPublisher = findViewById(R.id.txtPublisher) as TextView
+        txtPublisher = findViewById<TextView>(R.id.txtPublisher)
         txtPublisher.text = "Publisher : " + mRecipeItem.publisher
 
-        txtSourceUrl = findViewById(R.id.txtUrl) as TextView
+        txtSourceUrl = findViewById<TextView>(R.id.txtUrl)
         txtSourceUrl.isSelected = true
         txtSourceUrl.text = "Url : " + mRecipeItem.sourceUrl
 
-        txtPublisherUrl = findViewById(R.id.txtPublisherUrl) as TextView
+        txtPublisherUrl = findViewById<TextView>(R.id.txtPublisherUrl)
         txtPublisherUrl.isSelected = true
         txtPublisherUrl.text = "Publisher info : " + mRecipeItem.publisherUrl
     }
